@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'package:quizzler/quiz_brain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -26,27 +26,19 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Widget> scoreKeeper = [];
-  List<Question> questions = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
-
+  QuizBrain quizBrain = QuizBrain();
   void addScore(bool score) {
     setState(() {
-      if (scoreKeeper.length < questions.length) {
-        if (score == questions[scoreKeeper.length].answer) {
-          scoreKeeper.add(
+      if (quizBrain.scoreKeeper.length < quizBrain.questions.length) {
+        if (score == quizBrain.questions[quizBrain.scoreKeeper.length].answer) {
+          quizBrain.scoreKeeper.add(
             Icon(
               Icons.check,
               color: Colors.green,
             ),
           );
         } else {
-          scoreKeeper.add(Icon(
+          quizBrain.scoreKeeper.add(Icon(
             Icons.close,
             color: Colors.red,
           ));
@@ -58,8 +50,8 @@ class _QuizPageState extends State<QuizPage> {
   String getQuestion() {
     String result = '';
 
-    if (scoreKeeper.length < questions.length) {
-      result = questions[scoreKeeper.length].question;
+    if (quizBrain.scoreKeeper.length < quizBrain.questions.length) {
+      result = quizBrain.questions[quizBrain.scoreKeeper.length].question;
     }
 
     return result;
@@ -125,7 +117,7 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
           Row(
-            children: scoreKeeper,
+            children: quizBrain.scoreKeeper,
           ),
         ]);
   }
