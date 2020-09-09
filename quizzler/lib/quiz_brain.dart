@@ -4,7 +4,7 @@ import 'question.dart';
 
 class QuizBrain {
   List<Widget> scoreKeeper = [];
-  List<Question> questions = [
+  List<Question> _questions = [
     Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
     Question(
         q: 'Approximately one quarter of human bones are in the feet.',
@@ -38,4 +38,32 @@ class QuizBrain {
         q: 'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         a: true),
   ];
+
+  String getQuestion() {
+    String result = '';
+
+    if (scoreKeeper.length < _questions.length) {
+      result = _questions[scoreKeeper.length].question;
+    }
+
+    return result;
+  }
+
+  void addScore(bool score) {
+    if (scoreKeeper.length < _questions.length) {
+      if (score == _questions[scoreKeeper.length].answer) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreKeeper.add(Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+      }
+    }
+  }
 }

@@ -27,35 +27,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   QuizBrain quizBrain = QuizBrain();
-  void addScore(bool score) {
-    setState(() {
-      if (quizBrain.scoreKeeper.length < quizBrain.questions.length) {
-        if (score == quizBrain.questions[quizBrain.scoreKeeper.length].answer) {
-          quizBrain.scoreKeeper.add(
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          );
-        } else {
-          quizBrain.scoreKeeper.add(Icon(
-            Icons.close,
-            color: Colors.red,
-          ));
-        }
-      }
-    });
-  }
-
-  String getQuestion() {
-    String result = '';
-
-    if (quizBrain.scoreKeeper.length < quizBrain.questions.length) {
-      result = quizBrain.questions[quizBrain.scoreKeeper.length].question;
-    }
-
-    return result;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +40,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  getQuestion(),
+                  quizBrain.getQuestion(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 25.0,
@@ -93,7 +64,9 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 onPressed: () {
-                  addScore(true);
+                  setState(() {
+                    quizBrain.addScore(true);
+                  });
                 },
               ),
             ),
@@ -111,7 +84,9 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 onPressed: () {
-                  addScore(false);
+                  setState(() {
+                    quizBrain.addScore(false);
+                  });
                 },
               ),
             ),
