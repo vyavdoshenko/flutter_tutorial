@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -27,6 +28,25 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   QuizBrain quizBrain = QuizBrain();
+
+  basicAlert(context) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "This is last question.",
+      desc: "Let's start from the beginning.",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +86,10 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     quizBrain.addScore(true);
+                    if (quizBrain.isItLastQuestion()) {
+                      basicAlert(context);
+                      quizBrain.scoreKeeper.clear();
+                    }
                   });
                 },
               ),
@@ -86,6 +110,10 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   setState(() {
                     quizBrain.addScore(false);
+                    if (quizBrain.isItLastQuestion()) {
+                      basicAlert(context);
+                      quizBrain.scoreKeeper.clear();
+                    }
                   });
                 },
               ),

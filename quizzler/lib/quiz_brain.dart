@@ -40,13 +40,11 @@ class QuizBrain {
   ];
 
   String getQuestion() {
-    String result = '';
-
     if (scoreKeeper.length < _questions.length) {
-      result = _questions[scoreKeeper.length].question;
+      return _questions[scoreKeeper.length].question;
     }
 
-    return result;
+    return null;
   }
 
   void addScore(bool score) {
@@ -65,5 +63,9 @@ class QuizBrain {
         ));
       }
     }
+  }
+
+  bool isItLastQuestion() {
+    return !(scoreKeeper.length < _questions.length);
   }
 }
