@@ -12,7 +12,8 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   int temperature;
-  int condition;
+  String weatherIcon;
+  String weatherMessage;
   String cityName;
 
   WeatherModel weatherModel = WeatherModel();
@@ -26,6 +27,13 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weather) {
     setState(() {
+      if (weather == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        weatherMessage = 'Unable to get weather data';
+        cityName = '';
+        return;
+      }
       try {
         temperature = weather['main']['temp'];
       } catch (e) {
@@ -33,7 +41,8 @@ class _LocationScreenState extends State<LocationScreen> {
         temperature = temp.toInt();
       }
 
-      condition = weather['weather'][0]['id'];
+      weatherIcon = weatherModel.getWeatherIcon(weather['weather'][0]['id']);
+      weatherMessage = weatherModel.getMessage(temperature);
       cityName = weather['name'];
     });
   }
@@ -60,7 +69,10 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var weatherData = await weatherModel.getLocationWeather();
+                      updateUI(weatherData);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
@@ -84,7 +96,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: kTempTextStyle,
                     ),
                     Text(
-                      weatherModel.getWeatherIcon(condition),
+                      weatherIcon,
                       style: kConditionTextStyle,
                     ),
                   ],
@@ -93,7 +105,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  '${weatherModel.getMessage(temperature)} in $cityName',
+                  '$weatherMessage in $cityName',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
