@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "440930732975",
+    "firebase_url": "https://chat-app-a24e0.firebaseio.com",
+    "project_id": "chat-app-a24e0",
+    "storage_bucket": "chat-app-a24e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440930732975:android:feedb6c74a938ba4aebd5a",
+        "android_client_info": {
+          "package_name": "com.vyavdoshenko.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440930732975-jigcpbqd8k5965d4eb9rhuurab2mtu01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByx73WxQAqjNtFNSIFuej8nss1ooGRy1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440930732975-jigcpbqd8k5965d4eb9rhuurab2mtu01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
