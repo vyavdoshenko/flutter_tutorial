@@ -56,6 +56,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                 ),
                 TypewriterAnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  speed: Duration(milliseconds: 300),
                   text: ['Flash Chat'],
                   textStyle: TextStyle(
                     fontSize: 45.0,
