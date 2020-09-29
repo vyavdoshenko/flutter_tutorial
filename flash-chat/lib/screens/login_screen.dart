@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                   try {
                     final user = await _auth.signInWithEmailAndPassword(
-                      email: _email,
+                      email: _email.trim(),
                       password: _password,
                     );
 
