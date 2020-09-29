@@ -11,12 +11,20 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User _loggedInUser;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String _message;
 
   void getCurrentUser() {
     _loggedInUser = _auth.currentUser;
+  }
+
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data);
+      }
+    }
   }
 
   @override
@@ -46,6 +54,32 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator(
+                    backgroundColor: Colors.lightBlue,
+                  );
+                }
+
+                List<Text> messageWidgets = [];
+                final messages = snapshot.data.docs;
+
+                for (var message in messages) {
+                  final messageText = message.data()['text'];
+                  final messageSender = message.data()['sender'];
+
+                  final messageWidget =
+                      Text('$messageText from $messageSender');
+
+                  messageWidgets.add(messageWidget);
+                }
+                return Column(
+                  children: messageWidgets,
+                );
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
