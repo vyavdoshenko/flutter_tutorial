@@ -61,10 +61,54 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 40.0,
+                  vertical: 20.0,
+                ),
+                children: <Widget>[
+                  RowItem(
+                    text: 'Buy milk',
+                    checked: false,
+                    striked: false,
+                  ),
+                  RowItem(
+                    text: 'Buy eggs',
+                    checked: false,
+                    striked: false,
+                  ),
+                  RowItem(
+                    text: 'Buy bread',
+                    checked: false,
+                    striked: true,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class RowItem extends StatelessWidget {
+  final String text;
+  final bool checked;
+  final bool striked;
+  RowItem(
+      {@required this.text, @required this.checked, @required this.striked});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(text),
+        Checkbox(
+          value: checked,
+        ),
+      ],
     );
   }
 }
