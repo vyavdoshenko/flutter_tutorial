@@ -8,17 +8,14 @@ class TasksList extends StatelessWidget {
       children: <Widget>[
         TaskTile(
           text: 'Buy milk',
-          checked: false,
           striked: false,
         ),
         TaskTile(
           text: 'Buy eggs',
-          checked: false,
           striked: false,
         ),
         TaskTile(
           text: 'Buy bread',
-          checked: false,
           striked: true,
         ),
       ],
